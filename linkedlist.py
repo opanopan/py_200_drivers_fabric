@@ -159,7 +159,7 @@ class DoubleLinkedList(LinkedList):
     def _node_iter_rev(self):
         current_node = self.head
         begin_node = current_node
-        while current_node is not None:
+        while True:
             yield current_node
             current_node = current_node._prev_node
             if current_node == begin_node:
@@ -183,10 +183,15 @@ class DoubleLinkedList(LinkedList):
 
     def insert(self, data, index=0):
         if index < 0 or index > self._size:
-            raise ValueError
+            raise ValueError("Wrong index!")
 
         new_node = DoubleNode(data)
         self._size += 1
+
+        if self._size == 1:
+            self.append(new_node)
+            return
+
         if index == 0:
             new_node.next_node = self.head
             new_node.prev_node = self.tail
